@@ -8,3 +8,9 @@ dist/
 build/
 .cache/
 .DS_Store?
+
+# Ignore images
+*.png
+*.jpg
+*.jpeg
+*.svg
