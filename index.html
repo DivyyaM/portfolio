@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Divya Meena | Data Analyst Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Optional: Particle.js for background effect. You'd link the library here. -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script> -->
+
+    <style>
+        :root {
+            --background-dark: #0A0A0A; /* Deep Charcoal */
+            --background-card: #181818; /* Slightly lighter charcoal for cards */
+            --text-light: #E0E0E0; /* Off-white for general text */
+            --text-lighter: #F5F5F5; /* Near white for headings */
+            --accent-main: #06B6D4; /* Tailwind's cyan-500 */
+            --accent-hover: #22D3EE; /* Tailwind's cyan-400 */
+            --glass-bg: rgba(24, 24, 24, 0.7); /* Darker glassmorphism */
+            --glass-border: rgba(255, 255, 255, 0.08);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+        h1, h2, h3, h4 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-lighter);
+        }
+
+        /* Utility classes mapped to CSS variables (so custom class names work) */
+        .accent-color { color: var(--accent-main); }
+        .bg-accent { background-color: var(--accent-main); }
+        .border-accent { border-color: var(--accent-main); }
+        .hover\:bg-accent-hover:hover { background-color: var(--accent-hover); }
+        .hover\:text-accent-hover:hover { color: var(--accent-hover); }
+        .text-text-lighter { color: var(--text-lighter); }
+        .text-text-light { color: var(--text-light); }
+        .bg-background-dark { background-color: var(--background-dark); }
+        .bg-background-card { background-color: var(--background-card); }
+
+        /* Button styles without Tailwind @apply (works without a build step) */
+        .btn-primary {
+            background-color: var(--accent-main);
+            color: var(--background-dark);
+            font-weight: 800;
+            padding: 0.75rem 2rem;
+            border-radius: 0.5rem;
+            display: inline-block;
+            transition: transform 0.15s ease, background-color 0.2s ease;
+        }
+        .btn-primary:hover { transform: scale(1.05); background-color: var(--accent-hover); }
+        .btn-secondary {
+            background-color: var(--background-card);
+            color: var(--text-light);
+            font-weight: 700;
+            padding: 0.75rem 2rem;
+            border-radius: 0.5rem;
+            display: inline-block;
+            transition: transform 0.15s ease, background-color 0.2s ease;
+        }
+        .btn-secondary:hover { transform: scale(1.05); background-color: #2a2a2a; }
+        .btn-link { display: inline-flex; align-items: center; font-weight: 600; color: var(--accent-main); }
+        .btn-link:hover { color: var(--accent-hover); }
+
+        .glassmorphism {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .scroll-target {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .scroll-target.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hero Section Specifics */
+        #hero {
+            position: relative;
+            overflow: hidden; /* For particle background */
+        }
+        #particles-js { /* This is where particle.js would render */
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+        #hero > .container {
+            position: relative;
+            z-index: 1; /* Ensure content is above particles */
+        }
+
+        /* Project Card Hover Effect */
+        .project-card-image {
+            transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
+        }
+        .project-card-image:hover {
+            transform: scale(1.03) rotate(1deg);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Skill Tag Hover */
+        .skill-tag {
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+        }
+        .skill-tag:hover {
+            background-color: var(--accent-main);
+            color: var(--background-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Timeline Dot Animation */
+        .timeline-dot {
+            animation: pulse-border 2s infinite;
+        }
+        @keyframes pulse-border {
+            0% { box-shadow: 0 0 0 0 rgba(6, 182, 212, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(6, 182, 212, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(6, 182, 212, 0); }
+        }
+
+        /* Global button styles for consistency */
+        .btn-primary {
+            @apply bg-accent-main text-background-dark font-bold py-3 px-8 rounded-lg text-center transition-all transform hover:scale-105 hover:bg-accent-hover;
+        }
+        .btn-secondary {
+            @apply bg-background-card text-text-light font-bold py-3 px-8 rounded-lg text-center transition-all transform hover:scale-105 hover:bg-gray-700;
+        }
+        .btn-link {
+            @apply flex items-center font-semibold text-accent-main hover:text-accent-hover transition-colors;
+        }
+
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header & Navigation -->
+    <header class="fixed top-0 left-0 right-0 z-50 glassmorphism">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-extrabold tracking-widest hover:text-accent-main transition-colors duration-300">DIVYA MEENA</a>
+            <nav class="hidden md:flex space-x-8 text-sm font-medium text-gray-400">
+                <a href="#about" class="hover:text-accent-hover transition-colors">About</a>
+                <a href="#skills" class="hover:text-accent-hover transition-colors">Skills</a>
+                <a href="#projects" class="hover:text-accent-hover transition-colors">Projects</a>
+                <a href="#experience" class="hover:text-accent-hover transition-colors">Experience</a>
+                <a href="#education" class="hover:text-accent-hover transition-colors">Education</a>
+                <a href="#contact" class="hover:text-accent-hover transition-colors">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 pt-24">
+
+        <!-- Hero Section -->
+        <section id="hero" class="min-h-screen flex items-center relative text-center md:text-left py-16">
+            <div id="particles-js"></div> <!-- Particle.js container -->
+            <div class="container mx-auto max-w-5xl relative z-10">
+                <p class="text-xl md:text-2xl accent-color font-medium mb-3 animate-fade-in-down">Hello, I'm Divya Meena.</p>
+                <h1 class="text-5xl md:text-7xl font-extrabold text-text-lighter tracking-tighter leading-tight mb-6 animate-fade-in-up">
+                    Data Analyst Bridging the Gap Between Data & Decisions.
+                </h1>
+                <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto md:mx-0 mb-10 animate-fade-in-up delay-200">
+                    I translate complex datasets into clear, actionable insights, leveraging Python, SQL, and machine learning to drive innovation and measurable business growth.
+                </p>
+                <div class="flex flex-col sm:flex-row space-y-5 sm:space-y-0 sm:space-x-6 justify-center md:justify-start animate-fade-in-up delay-400">
+                    <a href="#projects" class="btn-primary">View My Work</a>
+                    <a href="https://drive.google.com/file/d/1pmtMSTz8WHsgOpLB9wx2JL34wY5oUpr4/view" target="_blank" class="btn-secondary">Download CV</a>
+                </div>
+                 <div class="mt-12 flex space-x-7 justify-center md:justify-start animate-fade-in-up delay-600">
+                    <a href="https://linkedin.com/in/divyameena" target="_blank" class="text-gray-400 hover:text-accent-hover transform hover:scale-110 transition-transform"><i data-lucide="linkedin" class="w-7 h-7"></i></a>
+                    <a href="https://github.com/DivyyaM" target="_blank" class="text-gray-400 hover:text-accent-hover transform hover:scale-110 transition-transform"><i data-lucide="github" class="w-7 h-7"></i></a>
+                    <a href="mailto:23mc0036@gmail.com" class="text-gray-400 hover:text-accent-hover transform hover:scale-110 transition-transform"><i data-lucide="mail" class="w-7 h-7"></i></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Me Section -->
+        <section id="about" class="py-24 scroll-target">
+            <div class="grid md:grid-cols-2 gap-16 items-center max-w-6xl mx-auto">
+                <div class="relative group rounded-xl overflow-hidden shadow-2xl hover:shadow-cyan-500/30 transition-shadow duration-500">
+                    <img src="Divya.jpg" alt="Divya Meena Professional Headshot" class="w-full h-auto object-cover rounded-xl group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent opacity-70 group-hover:opacity-80 transition-opacity duration-500"></div>
+                </div>
+                <div>
+                    <p class="text-lg accent-color font-semibold mb-3">A Bit About Me</p>
+                    <h2 class="text-4xl font-bold tracking-tight text-text-lighter mb-6">From Earth's Depths to Business Insights</h2>
+                    <p class="text-gray-300 mb-6 leading-relaxed text-lg">
+                        My fascination with data began during my Applied Geophysics studies at IIT (ISM) Dhanbad, where I uncovered patterns in complex seismic and geological datasets. This scientific curiosity naturally evolved into a passion for data analytics, applying the same rigorous approach to solve critical business challenges.
+                    </p>
+                    <p class="text-gray-300 leading-relaxed text-lg">
+                        I thrive on transforming raw data into clear, compelling narratives that drive strategic decisions. Whether it's optimizing financial models or enhancing e-commerce strategies, I believe every dataset holds a valuable story, and I have the skills to articulate it.
+                    </p>
+                    <a href="#contact" class="btn-primary mt-8">Let's Talk</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="py-24 scroll-target">
+            <h2 class="text-4xl font-bold text-center mb-16">My Technical Toolkit</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 max-w-7xl mx-auto">
+                <!-- Category 1: Programming & Databases -->
+                <div class="glassmorphism p-8 rounded-xl flex flex-col items-center text-center shadow-lg hover:shadow-cyan-500/20 transition-shadow duration-300">
+                    <div class="p-4 bg-accent-main rounded-full mb-6">
+                        <i data-lucide="code-square" class="w-10 h-10 text-background-dark"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-text-lighter mb-4">Programming & Databases</h3>
+                    <div class="flex flex-wrap justify-center gap-3">
+                        <span class="skill-tag bg-background-card text-gray-300 text-sm font-medium px-4 py-2 rounded-full shadow-md">Python</span>
+                        <span class="skill-tag bg-background-card text-gray-300 text-sm font-medium px-4 py-2 rounded-full shadow-md">Pandas</span>
+                        <span class="skill-tag bg-background-card text-gray-300 text-sm font-medium px-4 py-2 rounded-full shadow-md">NumPy</span>
+                        <span class="skill-tag bg-background-card text-gray-300 text-sm font-medium px-4 py-2 rounded-full shadow-md">SQL (MySQL)</span>
+                        <span class="skill-tag bg-background-card text-gray-300 text-sm font-medium px-4 py-2 rounded-full shadow-md">Streamlit</span>
+                    </div>
+                </div>
+                <!-- Category 2: Visualization & Analytics -->
+                <div class="glassmorphism p-8 rounded-xl flex flex-col items-center text-center shadow-lg hover:shadow-cyan-500/20 transition-shadow duration-300">
+                    <div class="p-4 bg-accent-main rounded-full mb-6">
+                        <i data-lucide="bar-chart-2" class="w-10 h-10 text-background-dark"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-text-lighter mb-4">Visualization & Analytics</h3>
+                    <div class="flex flex-wrap justify-center gap-3">
+                        <span class="skill-tag bg-background-card text-gray-300 text-sm font-medium px-4 py-2 rounded-full shadow-md">Tableau</span>
+                        <span class="skill-tag bg-background-card text-gray-300 text-sm font-medium px-4 py-2 rounded-full shadow-md">Power BI</span>
+                        <span class="skill-tag bg-background-card text-gray-300 text-sm font-medium px-4 py-2 rounded-full shadow-md">MS Excel</span>
+                        <span class="skill-tag bg-background-card text-gray-300 text-sm font-medium px-4 py-2 rounded-full shadow-md">Matplotlib</span>
+                        <span class="skill-tag bg-background-card text-gray-300 text-sm font-medium px-4 py-2 rounded-full shadow-md">Data Storytelling</span>
+                    </div>
+                </div>
+                <!-- Category 3: AI & Machine Learning -->
+                <div class="glassmorphism p-8 rounded-xl flex flex-col items-center text-center shadow-lg hover:shadow-cyan-500/20 transition-shadow duration-300">
+                    <div class="p-4 bg-accent-main rounded-full mb-6">
+                         <i data-lucide="brain" class="w-10 h-10 text-background-dark"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-text-lighter mb-4">AI & Machine Learning</h3>
+                    <div class="flex flex-wrap justify-center gap-3">
+                        <span class="skill-tag bg-background-card text-gray-300 text-sm font-medium px-4 py-2 rounded-full shadow-md">Scikit-learn</span>
+                        <span class="skill-tag bg-background-card text-gray-300 text-sm font-medium px-4 py-2 rounded-full shadow-md">TensorFlow</span>
+                         <span class="skill-tag bg-background-card text-gray-300 text-sm font-medium px-4 py-2 rounded-full shadow-md">Keras</span>
+                        <span class="skill-tag bg-background-card text-gray-300 text-sm font-medium px-4 py-2 rounded-full shadow-md">Regression</span>
+                        <span class="skill-tag bg-background-card text-gray-300 text-sm font-medium px-4 py-2 rounded-full shadow-md">Classification</span>
+                        <span class="skill-tag bg-background-card text-gray-300 text-sm font-medium px-4 py-2 rounded-full shadow-md">Feature Engineering</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="py-24 scroll-target">
+            <h2 class="text-4xl font-bold text-center mb-16">Featured Projects</h2>
+            <div class="space-y-20 max-w-6xl mx-auto">
+                <!-- Project 1: Loan Risk -->
+                <div class="grid md:grid-cols-2 gap-12 items-center glassmorphism p-8 rounded-xl shadow-lg">
+                    <div class="order-2 md:order-1">
+                        <p class="text-md font-semibold accent-color mb-2">Machine Learning & Analytics</p>
+                        <h3 class="text-3xl font-bold text-text-lighter mb-4">Loan Risk Optimization Model</h3>
+                        <p class="text-gray-300 mb-5 text-lg">
+                            Developed a robust predictive machine learning model to identify high-risk loan applicants, significantly mitigating potential financial losses. I led the entire data pipeline, from querying 38K+ applications with SQL to building an XGBoost model in Python and visualizing actionable insights in an interactive Tableau dashboard.
+                        </p>
+                        <p class="font-extrabold text-accent-main text-xl mb-6">Impact: Prevented an estimated $11.8M in losses and reduced loan defaults by 18%.</p>
+                        <div class="flex flex-wrap gap-3 my-4">
+                            <span class="bg-gray-700 text-gray-300 text-sm font-medium px-3 py-1 rounded-md">Python</span>
+                            <span class="bg-gray-700 text-gray-300 text-sm font-medium px-3 py-1 rounded-md">SQL</span>
+                            <span class="bg-gray-700 text-gray-300 text-sm font-medium px-3 py-1 rounded-md">XGBoost</span>
+                             <span class="bg-gray-700 text-gray-300 text-sm font-medium px-3 py-1 rounded-md">Tableau</span>
+                            <span class="bg-gray-700 text-gray-300 text-sm font-medium px-3 py-1 rounded-md">Machine Learning</span>
+                        </div>
+                        <div class="flex space-x-6 mt-6">
+                             <a href="https://drive.google.com/file/d/1pV9PmsNpiPyNDNTa86I2WYsh_CXEexx2/view?usp=sharing" target="_blank" rel="noopener" class="btn-link">View Case Study <i data-lucide="arrow-right" class="w-5 h-5 ml-2"></i></a>
+                             <a href="https://public.tableau.com/app/profile/divya.meena4877/viz/BankLoanRiskanalysis/SUMMAARY?publish=yes" target="_blank" rel="noopener" class="btn-link">Live Demo <i data-lucide="arrow-right" class="w-5 h-5 ml-2"></i></a>
+                        </div>
+                    </div>
+                    <div class="order-1 md:order-2">
+                        <img src="loanriskimage.png" alt="Loan Risk Dashboard Screenshot" class="rounded-xl shadow-xl project-card-image w-full">
+                    </div>
+                </div>
+                <!-- Project 2: E-commerce -->
+                <div class="grid md:grid-cols-2 gap-12 items-center glassmorphism p-8 rounded-xl shadow-lg">
+                    <div>
+                        <img src="Meshocarbonimage.png" alt="E-commerce Strategy Framework" class="rounded-xl shadow-xl project-card-image w-full">
+                    </div>
+                     <div>
+                        <p class="text-md font-semibold accent-color mb-2">Business Strategy & Data-Driven Product</p>
+                        <h3 class="text-3xl font-bold text-text-lighter mb-4">E-commerce Trust & Quality Signal (Meesho)</h3>
+                        <p class="text-gray-300 mb-5 text-lg">
+                            Architected a "Green Score" framework for a leading e-commerce platform (Meesho) to enhance product discovery and build trust among Tier-2/3 shoppers. This involved deep market research into a $355B market, defining a North Star Metric, and creating a 3-phase launch roadmap focused on reseller retention and order conversion.
+                        </p>
+                         <div class="flex flex-wrap gap-3 my-4">
+                            <span class="bg-gray-700 text-gray-300 text-sm font-medium px-3 py-1 rounded-md">Market Research</span>
+                            <span class="bg-gray-700 text-gray-300 text-sm font-medium px-3 py-1 rounded-md">KPI Framework</span>
+                            <span class="bg-gray-700 text-gray-300 text-sm font-medium px-3 py-1 rounded-md">Business Strategy</span>
+                            <span class="bg-gray-700 text-gray-300 text-sm font-medium px-3 py-1 rounded-md">Product Management</span>
+                        </div>
+                        <div class="flex space-x-6 mt-6">
+                             <a href="https://drive.google.com/file/d/1N5eeVJlk-lV5vO6xyNwx2sDxOkPa2v6U/view?usp=sharing" target="_blank" rel="noopener" class="btn-link">View Case Study <i data-lucide="arrow-right" class="w-5 h-5 ml-2"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+         <!-- Experience Section -->
+        <section id="experience" class="py-24 scroll-target">
+            <h2 class="text-4xl font-bold text-center mb-16">Professional Experience</h2>
+            <div class="max-w-4xl mx-auto">
+                <div class="relative border-l-2 border-gray-700 pl-10 space-y-16">
+                     <!-- Timeline Line -->
+                    <div class="absolute top-0 bottom-0 left-0 w-0.5 bg-gray-700"></div>
+
+                    <!-- Item 1 -->
+                    <div class="relative">
+                        <div class="absolute -left-12 top-0 bg-accent-main w-6 h-6 rounded-full border-4 border-background-dark timeline-dot"></div>
+                        <p class="text-sm text-gray-400 mb-1">June 2025 - July 2025</p>
+                        <h3 class="text-2xl font-bold text-text-lighter mb-2">Data Analyst Intern</h3>
+                        <p class="font-medium text-gray-300 text-lg mb-3">DMT Groups, Kolkata</p>
+                        <ul class="list-disc list-outside mt-2 text-gray-300 pl-6 space-y-2">
+                            <li>Performed data gathering and analysis on 150+ borehole and geological datasets, using Python to improve subsurface prediction accuracy by 25%.</li>
+                            <li>Visualized 500+ geochemical samples in Power BI, identifying mineral-rich zones and reducing interpretation time by 30%.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Item 2 -->
+                    <div class="relative">
+                        <div class="absolute -left-12 top-0 bg-accent-main w-6 h-6 rounded-full border-4 border-background-dark timeline-dot"></div>
+                        <p class="text-sm text-gray-400 mb-1">May 2024 - July 2024</p>
+                        <h3 class="text-2xl font-bold text-text-lighter mb-2">Research Intern</h3>
+                        <p class="font-medium text-gray-300 text-lg mb-3">Indian Institute of Science (IISc), Bangalore</p>
+                         <ul class="list-disc list-outside mt-2 text-gray-300 pl-6 space-y-2">
+                            <li>Processed 1000+ hours of seismic waveform data using Python, applying FFT and cross-correlation to improve signal quality by 40%.</li>
+                            <li>Enhanced tomography input accuracy via automated data transformation pipelines, contributing to more precise subsurface imaging.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education Section -->
+        <section id="education" class="py-24 scroll-target">
+            <h2 class="text-4xl font-bold text-center mb-16">Education</h2>
+            <div class="max-w-4xl mx-auto space-y-8">
+                <article class="glassmorphism p-6 rounded-xl">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+                        <div>
+                            <h3 class="text-2xl font-bold text-text-lighter">Indian Institute of Technology (Indian School of Mines) Dhanbad</h3>
+                            <p class="text-gray-300">MSc.Tech in Applied Geophysics </p>
+                        </div>
+                        <div class="text-gray-400">July 2023 – May 2026 </div>
+                    </div>
+                    <ul class="list-disc list-outside mt-3 text-gray-300 pl-6 space-y-1">
+                        <li>Coursework: Data Analysis, Signal Processing, Statistics, Programming.</li>
+                        <li>Highlights: Research, internships, and analytics-focused projects.</li>
+                    </ul>
+                </article>
+                <article class="glassmorphism p-6 rounded-xl">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+                        <div>
+                            <h3 class="text-2xl font-bold text-text-lighter">Modi Institute of Management and Technology, Kota</h3>
+                            <p class="text-gray-300">BSc in Mathematics </p>
+                        </div>
+                        <div class="text-gray-400">July 2020 – May 2023</div>
+                    </div>
+                    <ul class="list-disc list-outside mt-3 text-gray-300 pl-6 space-y-1">
+                        <li>Key subjects: Calculus, Linear Algebra, Probability.</li>
+                        <li>Achievements: Consistent academic performance; foundation for data analytics.</li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-24 text-center scroll-target">
+            <h2 class="text-5xl font-bold mb-6 text-text-lighter">Let's Connect and Create Something Great</h2>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto mb-10">
+                I'm actively seeking new opportunities to leverage data for impactful solutions and am always eager to discuss data science, analytics, and innovative projects. Feel free to reach out!
+            </p>
+             <a href="mailto:23mc0036@gmail.com" class="btn-primary text-xl px-12 py-5">
+                Say Hello
+             </a>
+             <div class="mt-12 flex space-x-7 justify-center">
+                <a href="https://linkedin.com/in/divyameena" target="_blank" class="text-gray-400 hover:text-accent-hover transform hover:scale-110 transition-transform"><i data-lucide="linkedin" class="w-8 h-8"></i></a>
+                <a href="https://github.com/DivyyaM" target="_blank" class="text-gray-400 hover:text-accent-hover transform hover:scale-110 transition-transform"><i data-lucide="github" class="w-8 h-8"></i></a>
+                <a href="mailto:23mc0036@gmail.com" class="text-gray-400 hover:text-accent-hover transform hover:scale-110 transition-transform"><i data-lucide="mail" class="w-8 h-8"></i></a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="border-t border-gray-800 mt-20">
+        <div class="container mx-auto px-6 py-8 text-center text-gray-500">
+            <p>&copy; 2025 Divya Meena. All Rights Reserved.</p>
+            <p class="text-sm mt-2">Designed and Developed with Passion.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Scroll animation observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    // Stop observing once visible if you want the animation to run only once
+                    // observer.unobserve(entry.target);
+                } else {
+                    // Optional: remove 'visible' class if you want animation to re-run on scroll back
+                    // entry.target.classList.remove('visible');
+                }
+            });
+        }, {
+            threshold: 0.1 // Adjust as needed: 0.1 means 10% of the element needs to be visible
+        });
+
+        const targets = document.querySelectorAll('.scroll-target');
+        targets.forEach(target => {
+            observer.observe(target);
+        });
+
+        // Particle.js Initialization (if you choose to use it)
+        /*
+        particlesJS('particles-js', {
+            "particles": {
+                "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#06B6D4" }, // Accent color
+                "shape": { "type": "circle", "stroke": { "width": 0, "color": "#000000" }, "polygon": { "nb_sides": 5 } },
+                "opacity": { "value": 0.3, "random": false, "anim": { "enable": false, "speed": 1, "opacity_min": 0.1, "sync": false } },
+                "size": { "value": 3, "random": true, "anim": { "enable": false, "speed": 40, "size_min": 0.1, "sync": false } },
+                "line_linked": { "enable": true, "distance": 150, "color": "#1F2937", "opacity": 0.2, "width": 1 },
+                "move": { "enable": true, "speed": 3, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false, "attract": { "enable": false, "rotateX": 600, "rotateY": 1200 } }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" }, "resize": true },
+                "modes": {
+                    "grab": { "distance": 180, "line_linked": { "opacity": 0.4 } },
+                    "bubble": { "distance": 400, "size": 40, "duration": 2, "opacity": 8, "speed": 3 },
+                    "repulse": { "distance": 200, "duration": 0.4 },
+                    "push": { "particles_nb": 4 },
+                    "remove": { "particles_nb": 2 }
+                }
+            },
+            "retina_detect": true
+        });
+        */
+    </script>
+</body>
+</html>
+
